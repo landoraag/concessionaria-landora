@@ -45,16 +45,13 @@
     <symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
     <symbol id="drive" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 4v8l6 3M12 12l-6 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
 
-    <!-- Silhueta de cupê esportivo (ilustração genérica, sem marca) -->
-    <symbol id="car" viewBox="0 0 420 170">
-      <path class="car-body" d="M12 124V108c0-8 8-13 26-17l74-14c28-24 64-36 106-36 40 0 74 12 100 32l62 12c18 4 26 12 28 22l2 17z"/>
-      <path class="car-glass" d="M132 76c22-18 52-26 86-26 34 0 62 10 82 26z"/>
-      <path class="car-line" d="M40 104h352M214 52l-6 52"/>
-      <path class="car-light" d="M390 98h18c4 2 5 6 5 10v4h-24z"/>
-      <path class="car-light-r" d="M12 106h20v8H12z"/>
-      <circle class="car-arch" cx="104" cy="128" r="33"/><circle class="car-arch" cx="326" cy="128" r="33"/>
-      <g class="car-wheel"><circle cx="104" cy="128" r="27"/><circle cx="104" cy="128" r="14" class="rim"/><circle cx="326" cy="128" r="27"/><circle cx="326" cy="128" r="14" class="rim"/></g>
-    </symbol>
+    <symbol id="road" viewBox="0 0 24 24"><path d="M9 3 5 21M15 3l4 18M12 4v3m0 4v3m0 4v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="fuel" viewBox="0 0 24 24"><path d="M5 20V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v15M4 20h11M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8l-3-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 8h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chev-l" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="chev-r" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 10h16M8 3v4m8-4v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -88,7 +85,9 @@
 <main>
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true">
+      <img src="img/carros/bmw-m4-full.webp" alt="" width="900" height="1589">
+    </div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Seu próximo carro, sem enrolação</p>
@@ -105,13 +104,14 @@
         </div>
       </div>
 
-      <div class="hero-stage" aria-hidden="true">
-        <svg class="car car-back"><use href="#car"/></svg>
-        <svg class="car car-front"><use href="#car"/></svg>
-        <div class="floor-glow"></div>
-        <div class="orbit"><span>escolha em<b><span data-count="15">15</span> min</b></span></div>
-        <div class="chip chip-a"><svg><use href="#key"/></svg><p><b>+<span data-count="200">200</span></b> carros em estoque</p></div>
-        <div class="chip chip-b"><svg><use href="#shield"/></svg><p>Negócio com garantia</p></div>
+      <div class="hero-stage">
+        <div class="car3d">
+          <div class="car3d-shadow"></div>
+          <img class="car3d-img" src="img/carros/bmw-m4-recorte.webp" width="950" height="356" fetchpriority="high" alt="BMW M4 verde">
+        </div>
+        <div class="orbit" aria-hidden="true"><span>escolha em<b><span data-count="15">15</span> min</b></span></div>
+        <div class="chip chip-a" aria-hidden="true"><svg><use href="#key"/></svg><p><b><span data-count="4" data-live="estoque">4</span></b> carros em estoque</p></div>
+        <div class="chip chip-b" aria-hidden="true"><svg><use href="#shield"/></svg><p>Negócio com garantia</p></div>
       </div>
     </div>
   </section>
@@ -194,188 +194,18 @@
       <div class="toolbar">
         <div class="pills" role="group" aria-label="Filtrar por tipo">
           <button class="pill is-on" type="button" data-filter="todos" aria-pressed="true">Todos</button>
-          <button class="pill" type="button" data-filter="esportivo" aria-pressed="false">Esportivos</button>
-          <button class="pill" type="button" data-filter="suv" aria-pressed="false">SUVs</button>
+          <button class="pill" type="button" data-filter="cupe" aria-pressed="false">Cupês</button>
           <button class="pill" type="button" data-filter="sedan" aria-pressed="false">Sedãs</button>
+          <button class="pill" type="button" data-filter="suv" aria-pressed="false">SUVs</button>
         </div>
         <label class="search">
           <svg aria-hidden="true"><use href="#search"/></svg>
           <input id="busca" type="search" placeholder="Buscar por modelo" autocomplete="off">
         </label>
       </div>
-      <p class="result-count" aria-live="polite"><span id="contagem">6</span> carros em estoque</p>
+      <p class="result-count" aria-live="polite"><span id="contagem">4</span> carros em estoque</p>
 
-      <div class="cars" id="lista-carros">
-        <article class="car-card spot" data-cat="esportivo" data-name="cupê esportivo gt">
-          <div class="car-photo tone-dark">
-            <span class="year">2024</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>3,9 s</dd></div>
-                <div><dt>Cor</dt><dd>Preto grafite</dd></div>
-                <div><dt>Rodou</dt><dd>12.400 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Cupê esportivo GT">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>Cupê esportivo GT</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.0 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>450 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 649.900</p>
-              <button class="round" type="button" data-open-lead data-car="Cupê esportivo GT" aria-label="Pedir proposta do Cupê esportivo GT"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="car-card spot" data-cat="suv" data-name="suv premium lx">
-          <div class="car-photo tone-lime">
-            <span class="year">2023</span>
-            <span class="tag-new">Novo</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>4,8 s</dd></div>
-                <div><dt>Cor</dt><dd>Verde-limão</dd></div>
-                <div><dt>Rodou</dt><dd>8.900 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="SUV premium LX">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>SUV premium LX</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.5 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>420 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 539.900</p>
-              <button class="round" type="button" data-open-lead data-car="SUV premium LX" aria-label="Pedir proposta do SUV premium LX"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="car-card spot" data-cat="sedan" data-name="sedã executivo">
-          <div class="car-photo tone-dark">
-            <span class="year">2024</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>6,4 s</dd></div>
-                <div><dt>Cor</dt><dd>Cinza chumbo</dd></div>
-                <div><dt>Rodou</dt><dd>5.200 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Sedã executivo">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>Sedã executivo</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>2.0 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>245 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 389.900</p>
-              <button class="round" type="button" data-open-lead data-car="Sedã executivo" aria-label="Pedir proposta do Sedã executivo"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="car-card spot" data-cat="esportivo" data-name="cupê roadster rs">
-          <div class="car-photo tone-lime">
-            <span class="year">2022</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>3,4 s</dd></div>
-                <div><dt>Cor</dt><dd>Verde-limão</dd></div>
-                <div><dt>Rodou</dt><dd>18.700 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Cupê roadster RS">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>Cupê roadster RS</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>4.0 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>520 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 789.900</p>
-              <button class="round" type="button" data-open-lead data-car="Cupê roadster RS" aria-label="Pedir proposta do Cupê roadster RS"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="car-card spot" data-cat="suv" data-name="suv família xl">
-          <div class="car-photo tone-dark">
-            <span class="year">2024</span>
-            <span class="tag-new">Novo</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>6,9 s</dd></div>
-                <div><dt>Cor</dt><dd>Preto grafite</dd></div>
-                <div><dt>Rodou</dt><dd>3.100 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="SUV família XL">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>SUV família XL</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>2.5 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>310 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 459.900</p>
-              <button class="round" type="button" data-open-lead data-car="SUV família XL" aria-label="Pedir proposta do SUV família XL"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-
-        <article class="car-card spot" data-cat="sedan" data-name="sedã sport s">
-          <div class="car-photo tone-dark">
-            <span class="year">2023</span>
-            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
-            <div class="car-reveal">
-              <dl>
-                <div><dt>0 a 100 km/h</dt><dd>4,7 s</dd></div>
-                <div><dt>Cor</dt><dd>Cinza chumbo</dd></div>
-                <div><dt>Rodou</dt><dd>14.300 km</dd></div>
-              </dl>
-              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Sedã sport S">Falar com consultor</button>
-            </div>
-          </div>
-          <div class="car-info">
-            <h3>Sedã sport S</h3>
-            <ul class="specs">
-              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.0 L</li>
-              <li><svg aria-hidden="true"><use href="#gauge"/></svg>380 cv</li>
-              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
-              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
-            </ul>
-            <div class="car-foot">
-              <p class="price">R$ 479.900</p>
-              <button class="round" type="button" data-open-lead data-car="Sedã sport S" aria-label="Pedir proposta do Sedã sport S"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            </div>
-          </div>
-        </article>
-      </div>
+      <div class="cars" id="lista-carros"></div>
 
       <div class="empty" id="vazio" hidden>
         <p>Nenhum carro encontrado com esse filtro.</p>
@@ -427,7 +257,7 @@
     <div class="wrap">
       <div class="cta">
         <div class="cta-art" aria-hidden="true">
-          <svg class="car"><use href="#car"/></svg>
+          <img src="img/carros/honda-civic-wide.webp" alt="" loading="lazy" width="544" height="340">
         </div>
         <div class="cta-title">
           <p class="eyebrow">Seu carro está esperando</p>
@@ -507,6 +337,11 @@
   </div>
 </dialog>
 
+<dialog class="sheet" id="detalhe" aria-label="Detalhes do carro">
+  <div class="sheet-body" id="detalhe-corpo"></div>
+</dialog>
+
+<script src="js/carros.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

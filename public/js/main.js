@@ -1,10 +1,18 @@
 // Interações do site da Landora Motors.
-// A integração com o Firebase (login, estoque, pedidos) entra em uma próxima etapa.
+// Os carros vêm de js/carros.js. A integração com o Firebase (login, estoque, pedidos)
+// entra em uma próxima etapa.
 
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var CARROS = window.CARROS || [];
+
+  function brl(n) { return 'R$ ' + n.toLocaleString('pt-BR'); }
+  function kmTxt(n) { return n.toLocaleString('pt-BR') + ' km'; }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function icon(id) { return '<svg aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+  function norm(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 
   /* ---------- Menu mobile ---------- */
   var toggle = $('.menu-toggle');
@@ -74,7 +82,6 @@
     var el = document.getElementById(id);
     if (el) spy.observe(el);
   });
-  // Ao voltar ao topo, nenhuma seção fica marcada
   var hero = $('.hero');
   if (hero) {
     new IntersectionObserver(function (en) {
@@ -82,61 +89,100 @@
     }, { threshold: 0.5 }).observe(hero);
   }
 
+  /* ---------- Estoque: cartões gerados a partir de js/carros.js ---------- */
+  var list = $('#lista-carros');
+  list.innerHTML = CARROS.map(function (c) {
+    return '' +
+      '<article class="car-card spot" data-cat="' + c.categoria + '" data-name="' + esc(c.nome.toLowerCase()) + '" data-slug="' + c.slug + '">' +
+        '<div class="car-photo">' +
+          '<span class="year">' + esc(c.ano.split('/')[1] || c.ano) + '</span>' +
+          (c.condicao === 'Novo' ? '<span class="tag-new">Novo</span>' : '') +
+          '<img class="car-img" src="' + c.foto.src + '" alt="' + esc(c.foto.alt) + '" loading="lazy" style="object-position:' + c.foto.pos + '">' +
+          '<div class="car-reveal">' +
+            '<dl>' + c.destaques.map(function (d) { return '<div><dt>' + esc(d[0]) + '</dt><dd>' + esc(d[1]) + '</dd></div>'; }).join('') + '</dl>' +
+            '<button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="' + esc(c.nome) + '">Falar com consultor</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="car-info">' +
+          '<h3><a class="stretch" href="#carro/' + c.slug + '">' + esc(c.nome) + '</a></h3>' +
+          '<ul class="specs">' +
+            '<li>' + icon('road') + (c.km === 0 ? '0 km' : kmTxt(c.km)) + '</li>' +
+            '<li>' + icon('engine') + esc(c.motor) + '</li>' +
+            '<li>' + icon('gear') + esc(c.cambio) + '</li>' +
+            '<li>' + icon('fuel') + esc(c.combustivel) + '</li>' +
+          '</ul>' +
+          '<div class="car-foot"><p class="price">' + brl(c.preco) + '</p><span class="round" aria-hidden="true">' + icon('arrow') + '</span></div>' +
+        '</div>' +
+      '</article>';
+  }).join('');
+
+  var cards = $$('.car-card');
+  $('#contagem').textContent = cards.length;
+  $$('[data-live="estoque"]').forEach(function (el) { el.setAttribute('data-count', cards.length); });
+
   /* ---------- Entrada ao rolar ---------- */
-  var revealTargets = $$('.section-head, .steps li, .adv, .car-card, .faq-list details, .cta, .toolbar');
+  var revealTargets = $$('.section-head .eyebrow, .section-head h2, .steps li, .adv, .car-card, .faq-list details, .cta, .toolbar');
   var groups = new Map();
   revealTargets.forEach(function (el) {
     var key = el.parentElement;
     var n = groups.get(key) || 0;
     groups.set(key, n + 1);
-    el.setAttribute('data-reveal', '');
+    el.setAttribute('data-reveal', el.tagName === 'H2' ? 'wipe' : 'rise');
     el.style.setProperty('--d', n);
   });
+  // Os títulos começam totalmente recortados (clip-path), então o navegador os trata como
+  // invisíveis. Por isso observamos o bloco que os contém e revelamos o título junto.
+  var porAlvo = new Map();
+  revealTargets.forEach(function (el) {
+    var alvo = el.tagName === 'H2' ? el.parentElement : el;
+    var lista = porAlvo.get(alvo) || [];
+    lista.push(el);
+    porAlvo.set(alvo, lista);
+  });
+  function revelar(el) {
+    el.classList.add('in');
+    // Remove o estado de entrada ao terminar, para não atrasar o hover depois
+    var done = function (e) {
+      if (e.target !== el || (e.propertyName !== 'opacity' && e.propertyName !== 'clip-path')) return;
+      el.removeEventListener('transitionend', done);
+      el.removeAttribute('data-reveal');
+      el.classList.remove('in');
+      el.style.removeProperty('--d');
+    };
+    el.addEventListener('transitionend', done);
+  }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
-      var el = en.target;
-      io.unobserve(el);
-      el.classList.add('in');
-      // Remove o estado de entrada ao terminar, para não atrasar o hover depois
-      var done = function (e) {
-        if (e.propertyName !== 'opacity') return;
-        el.removeEventListener('transitionend', done);
-        el.removeAttribute('data-reveal');
-        el.classList.remove('in');
-        el.style.removeProperty('--d');
-      };
-      el.addEventListener('transitionend', done);
+      io.unobserve(en.target);
+      (porAlvo.get(en.target) || []).forEach(revelar);
     });
   }, { threshold: 0.15 });
-  revealTargets.forEach(function (el) { io.observe(el); });
+  porAlvo.forEach(function (_, alvo) { io.observe(alvo); });
 
-  // Elementos que animam por classe .in (linha dos passos e velocímetro)
   var inView = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (en.isIntersecting) { en.target.classList.add('in'); inView.unobserve(en.target); }
     });
   }, { threshold: 0.4 });
-  var steps = $('.steps');
-  var speedo = $('.speedo');
-  [steps, speedo].forEach(function (el) { if (el) inView.observe(el); });
+  [$('.steps'), $('.speedo')].forEach(function (el) { if (el) inView.observe(el); });
   $$('.steps li').forEach(function (li, i) { li.style.setProperty('--d', i); });
 
   /* ---------- Contadores ---------- */
-  function countUp(el) {
-    var end = parseInt(el.getAttribute('data-count'), 10);
-    if (reduce) { el.textContent = end; return; }
+  function countUp(el, end, dur, fmt) {
+    if (reduce) { el.textContent = fmt ? fmt(end) : end; return; }
     var start = performance.now();
-    var dur = 1400;
     (function tick(now) {
       var t = Math.min((now - start) / dur, 1);
-      el.textContent = Math.round(end * (1 - Math.pow(1 - t, 3)));
+      var v = Math.round(end * (1 - Math.pow(1 - t, 3)));
+      el.textContent = fmt ? fmt(v) : v;
       if (t < 1) requestAnimationFrame(tick);
     })(start);
   }
   $$('[data-count]').forEach(function (el) {
+    var end = parseInt(el.getAttribute('data-count'), 10);
     el.textContent = 0;
-    setTimeout(function () { countUp(el); }, 1100);
+    setTimeout(function () { countUp(el, end, 1400); }, 1100);
   });
 
   /* ---------- Holofote dos cards e paralaxe do hero ---------- */
@@ -161,7 +207,6 @@
   }
 
   /* ---------- Estoque: filtros, busca e contagem ---------- */
-  var cards = $$('.car-card');
   var pills = $$('.pill');
   var input = $('#busca');
   var count = $('#contagem');
@@ -169,8 +214,6 @@
   var filter = 'todos';
 
   cards.forEach(function (c, i) { c.style.viewTransitionName = 'car-' + i; });
-
-  function norm(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 
   function applyFilter() {
     var q = norm(input.value.trim());
@@ -194,7 +237,6 @@
     if (document.startViewTransition && !reduce) document.startViewTransition(applyFilter);
     else applyFilter();
   }
-
   pills.forEach(function (p) {
     p.addEventListener('click', function () {
       filter = p.dataset.filter;
@@ -262,9 +304,8 @@
   var erro = $('#lead-erro');
   var select = $('#lead-carro');
 
-  // Lista de carros do estoque + opção livre
-  var opts = ['Ainda não sei'].concat(cards.map(function (c) { return $('h3', c).textContent; }));
-  select.innerHTML = opts.map(function (o) { return '<option>' + o + '</option>'; }).join('');
+  var opts = ['Ainda não sei'].concat(CARROS.map(function (c) { return c.nome; }));
+  select.innerHTML = opts.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
 
   function openLead(car) {
     form.hidden = false;
@@ -284,10 +325,12 @@
       dlg.close();
     }, { once: true });
   }
-  $$('[data-open-lead]').forEach(function (b) {
-    b.addEventListener('click', function () { openLead(b.getAttribute('data-car')); });
+  // Delegação: funciona também para botões criados depois (cartões e tela de detalhes)
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-open-lead]');
+    if (b) { openLead(b.getAttribute('data-car')); return; }
+    if (e.target.closest('[data-close-lead]')) closeLead();
   });
-  $$('[data-close-lead]').forEach(function (b) { b.addEventListener('click', closeLead); });
   dlg.addEventListener('click', function (e) { if (e.target === dlg) closeLead(); });
   dlg.addEventListener('cancel', function (e) { e.preventDefault(); closeLead(); });
 
@@ -303,4 +346,153 @@
     ok.hidden = false;
     form.reset();
   });
+
+  /* ---------- Tela de detalhes do carro ---------- */
+  var sheet = $('#detalhe');
+  var corpo = $('#detalhe-corpo');
+  var ROTA = /^#carro\/([\w-]+)$/;
+  var atual = null;      // slug aberto
+  var viaApp = false;    // abriu por clique dentro do site (então "voltar" pode usar o histórico)
+
+  function find(slug) { for (var i = 0; i < CARROS.length; i++) if (CARROS[i].slug === slug) return i; return -1; }
+
+  function renderDetalhe(i, troca) {
+    var c = CARROS[i];
+    atual = c.slug;
+    var n = CARROS.length;
+    var g = c.galeria && c.galeria.length ? c.galeria : [c.foto];
+    var stat = function (rot, val, extra) { return '<div class="d-stat"><small>' + rot + '</small><b' + (extra || '') + '>' + val + '</b></div>'; };
+
+    corpo.className = 'sheet-body' + (troca ? ' swap' : '');
+    corpo.innerHTML = '' +
+      '<div class="d-media">' +
+        '<figure class="d-photo"><img id="d-img" src="' + g[0].src + '" alt="' + esc(g[0].alt) + '" style="object-position:' + (g[0].pos || c.foto.pos) + '"></figure>' +
+        (g.length > 1 ? '<div class="d-thumbs" role="group" aria-label="Fotos do carro">' + g.map(function (f, k) {
+          return '<button type="button" class="d-thumb' + (k === 0 ? ' is-on' : '') + '" data-foto="' + k + '" aria-label="Ver foto ' + (k + 1) + '"><img src="' + f.src + '" alt=""></button>';
+        }).join('') + '</div>' : '') +
+        '<span class="d-tag">' + esc(c.condicao) + '</span>' +
+      '</div>' +
+      '<div class="d-info">' +
+        '<div class="d-bar">' +
+          '<button class="d-back" type="button" data-fechar-detalhe>' + icon('chev-l') + 'Voltar ao estoque</button>' +
+          '<div class="d-nav"><button type="button" data-prev aria-label="Carro anterior">' + icon('chev-l') + '</button><span>' + (i + 1) + ' de ' + n + '</span><button type="button" data-next aria-label="Próximo carro">' + icon('chev-r') + '</button></div>' +
+        '</div>' +
+        '<p class="eyebrow d-i" style="--i:0">' + esc(c.condicao) + ' · ' + esc(c.ano) + '</p>' +
+        '<h2 class="d-i" style="--i:1">' + esc(c.nome) + '</h2>' +
+        '<p class="d-sub d-i" style="--i:2">' + esc(c.motor) + ' · ' + esc(c.potencia) + ' · ' + esc(c.cambio) + '</p>' +
+        '<p class="d-price d-i" style="--i:3">' + brl(c.preco) + '</p>' +
+        '<div class="d-stats d-i" style="--i:4">' +
+          stat('Quilometragem', c.km === 0 ? '0 km' : '0 km', ' data-km="' + c.km + '"') +
+          stat('Ano', esc(c.ano)) + stat('Câmbio', esc(c.cambio)) + stat('Combustível', esc(c.combustivel)) +
+        '</div>' +
+        '<section class="d-sec d-i" style="--i:5"><h3>Ficha técnica</h3><dl class="d-specs">' +
+          c.ficha.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') +
+        '</dl></section>' +
+        '<section class="d-sec d-i" style="--i:6"><h3>Opcionais</h3><ul class="d-chips">' +
+          c.opcionais.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') +
+        '</ul></section>' +
+        '<section class="d-sec d-i" style="--i:7"><h3>Histórico</h3><ul class="d-checks">' +
+          c.historico.map(function (o) { return '<li>' + icon('check') + esc(o) + '</li>'; }).join('') +
+        '</ul></section>' +
+        '<section class="d-sec d-i" style="--i:8"><h3>Sobre o carro</h3><p class="d-desc">' + esc(c.descricao) + '</p></section>' +
+        '<div class="d-actions">' +
+          '<button class="btn btn-primary" type="button" data-open-lead data-car="' + esc(c.nome) + '">Falar com consultor ' + icon('arrow') + '</button>' +
+          '<button class="btn btn-ghost" type="button" data-copiar>' + icon('link') + '<span>Copiar link</span></button>' +
+        '</div>' +
+      '</div>';
+
+    var kmEl = $('[data-km]', corpo);
+    var kmVal = parseInt(kmEl.getAttribute('data-km'), 10);
+    if (kmVal > 0) setTimeout(function () { countUp(kmEl, kmVal, 1200, kmTxt); }, 450);
+    else kmEl.textContent = '0 km';
+    $('.d-info', corpo).scrollTop = 0;
+    sheet.scrollTop = 0;
+  }
+
+  function abrirDetalhe(slug) {
+    var i = find(slug);
+    if (i < 0) return;
+    if (!sheet.open) {
+      renderDetalhe(i, false);
+      sheet.showModal();
+      document.documentElement.classList.add('lock');
+    } else if (atual !== slug) {
+      renderDetalhe(i, true);
+    }
+  }
+  function fecharDetalheAnimado() {
+    if (!sheet.open) return;
+    var fim = function () {
+      sheet.classList.remove('closing');
+      sheet.close();
+      document.documentElement.classList.remove('lock');
+      atual = null;
+    };
+    if (reduce) { fim(); return; }
+    sheet.classList.add('closing');
+    sheet.addEventListener('animationend', fim, { once: true });
+  }
+  function pedirFechar() {
+    if (ROTA.test(location.hash)) {
+      if (viaApp && history.length > 1) history.back();
+      else { history.replaceState(null, '', location.pathname + location.search + '#carros'); fecharDetalheAnimado(); }
+    } else {
+      fecharDetalheAnimado();
+    }
+  }
+  function rota() {
+    var m = ROTA.exec(location.hash);
+    if (m && find(m[1]) >= 0) abrirDetalhe(m[1]);
+    else if (sheet.open) fecharDetalheAnimado();
+  }
+  window.addEventListener('hashchange', rota);
+
+  document.addEventListener('click', function (e) {
+    var l = e.target.closest('a[href^="#carro/"]');
+    if (l) { viaApp = true; return; }
+    var h = e.target.closest('[data-detalhe]');
+    if (h) { viaApp = true; location.hash = '#carro/' + h.getAttribute('data-detalhe'); }
+  });
+
+  sheet.addEventListener('click', function (e) {
+    if (e.target.closest('[data-fechar-detalhe]')) { pedirFechar(); return; }
+    var prox = e.target.closest('[data-prev],[data-next]');
+    if (prox) {
+      var i = find(atual);
+      var j = (i + (prox.hasAttribute('data-next') ? 1 : -1) + CARROS.length) % CARROS.length;
+      history.replaceState(null, '', '#carro/' + CARROS[j].slug);
+      renderDetalhe(j, true);
+      return;
+    }
+    var t = e.target.closest('[data-foto]');
+    if (t) {
+      var car = CARROS[find(atual)];
+      var gl = car.galeria[parseInt(t.getAttribute('data-foto'), 10)];
+      var img = $('#d-img', sheet);
+      img.classList.add('trocando');
+      setTimeout(function () {
+        img.src = gl.src; img.alt = gl.alt;
+        img.style.objectPosition = gl.pos || car.foto.pos;
+        img.classList.remove('trocando');
+      }, 160);
+      $$('.d-thumb', sheet).forEach(function (b) { b.classList.toggle('is-on', b === t); });
+      return;
+    }
+    var cp = e.target.closest('[data-copiar]');
+    if (cp) {
+      var rot = $('span', cp);
+      var url = location.href;
+      var feito = function () { rot.textContent = 'Link copiado'; setTimeout(function () { rot.textContent = 'Copiar link'; }, 2000); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(feito, function () { rot.textContent = 'Copie pela barra do navegador'; });
+      else rot.textContent = 'Copie pela barra do navegador';
+    }
+  });
+  sheet.addEventListener('cancel', function (e) { e.preventDefault(); pedirFechar(); });
+  document.addEventListener('keydown', function (e) {
+    if (!sheet.open || dlg.open) return;
+    if (e.key === 'ArrowRight') { var b = $('[data-next]', sheet); if (b) b.click(); }
+    if (e.key === 'ArrowLeft') { var a = $('[data-prev]', sheet); if (a) a.click(); }
+  });
+
+  rota();
 })();
