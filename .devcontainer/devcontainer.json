@@ -1,0 +1,14 @@
+{
+  "name": "concessionaria-landora",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "postCreateCommand": "npm install -g firebase-tools",
+  "forwardPorts": [5000, 8080],
+  "portsAttributes": {
+    "5000": { "label": "Site (Firebase Hosting)", "onAutoForward": "openPreview" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ritwickdey.LiveServer", "esbenp.prettier-vscode"]
+    }
+  }
+}

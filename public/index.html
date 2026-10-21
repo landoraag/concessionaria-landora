@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Landora Motors | Carros premium</title>
+  <meta name="description" content="Carros premium para quem valoriza desempenho, tecnologia e estilo. Escolha online e fale com um consultor.">
+  <meta name="theme-color" content="#070b10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Símbolos SVG reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 48 40">
+      <path d="M3 4h9l12 22L36 4h9L28 36h-8z" fill="currentColor"/>
+      <path d="M13 4l11 20L35 4" fill="none" stroke="#070b10" stroke-width="2.4"/>
+    </symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="chat" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-5 4v-4H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m11 12 8-8m-3 3 3 3m-6-0 2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 8.5v7l6-3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.8 12 2.4 2.4L15.5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="percent" viewBox="0 0 24 24"><path d="M18 5 6 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16.5" cy="16.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="phone" viewBox="0 0 24 24"><path d="M6 3h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A15 15 0 0 1 4 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="engine" viewBox="0 0 24 24"><path d="M4 9h3l1-2h6l1 2h2v3h2v4h-2v2H7l-2-2v-2H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="gauge" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m12 16 4-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="drive" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 4v8l6 3M12 12l-6 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+
+    <!-- Silhueta de cupê esportivo (ilustração genérica, sem marca) -->
+    <symbol id="car" viewBox="0 0 420 170">
+      <path class="car-body" d="M12 124V108c0-8 8-13 26-17l74-14c28-24 64-36 106-36 40 0 74 12 100 32l62 12c18 4 26 12 28 22l2 17z"/>
+      <path class="car-glass" d="M132 76c22-18 52-26 86-26 34 0 62 10 82 26z"/>
+      <path class="car-line" d="M40 104h352M214 52l-6 52"/>
+      <path class="car-light" d="M390 98h18c4 2 5 6 5 10v4h-24z"/>
+      <path class="car-light-r" d="M12 106h20v8H12z"/>
+      <circle class="car-arch" cx="104" cy="128" r="33"/><circle class="car-arch" cx="326" cy="128" r="33"/>
+      <g class="car-wheel"><circle cx="104" cy="128" r="27"/><circle cx="104" cy="128" r="14" class="rim"/><circle cx="326" cy="128" r="27"/><circle cx="326" cy="128" r="14" class="rim"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="site-header" id="topo">
+  <div class="wrap header-row">
+    <a class="brand" href="#topo" aria-label="Landora Motors, início">
+      <svg class="brand-mark" aria-hidden="true"><use href="#logo"/></svg>
+      <span class="brand-text"><b>LANDORA</b><i>Motors</i></span>
+    </a>
+
+    <nav class="main-nav" id="menu" aria-label="Principal">
+      <a href="#carros">Automóveis</a>
+      <a href="#vantagens">Financiamento</a>
+      <a href="#como-funciona">Troca</a>
+      <a href="#faq">Perguntas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <a class="header-phone" href="tel:+551100000000">
+      <svg aria-hidden="true"><use href="#phone"/></svg>(11) 0000-0000
+    </a>
+    <a class="btn btn-primary btn-sm header-cta" href="#contato">Quero uma proposta</a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Seu próximo carro, sem enrolação</p>
+        <h1>Escolha<br><em>mais rápido.</em><br>Dirija<br><em>com prazer.</em></h1>
+        <p class="lead">Carros premium para quem valoriza desempenho, tecnologia e estilo. Veja o estoque, fale com um consultor e feche o negócio com segurança.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#carros">Ver carros <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#contato">Quero uma proposta</a>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <svg class="car car-back"><use href="#car"/></svg>
+        <svg class="car car-front"><use href="#car"/></svg>
+        <div class="floor-glow"></div>
+        <div class="orbit"><span>escolha em<b>15 min</b></span></div>
+        <div class="chip chip-a"><svg><use href="#key"/></svg><p><b>+200</b> carros em estoque</p></div>
+        <div class="chip chip-b"><svg><use href="#shield"/></svg><p>Negócio com garantia</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="wrap">
+      <header class="section-head center">
+        <p class="eyebrow">Simples, rápido e seguro</p>
+        <h2>Como funciona</h2>
+      </header>
+      <ol class="steps">
+        <li>
+          <span class="step-n">01</span><span class="step-ico"><svg aria-hidden="true"><use href="#search"/></svg></span>
+          <h3>Escolha o carro</h3>
+          <p>Navegue pelo estoque e separe os modelos que combinam com você.</p>
+        </li>
+        <li>
+          <span class="step-n">02</span><span class="step-ico"><svg aria-hidden="true"><use href="#chat"/></svg></span>
+          <h3>Fale com a gente</h3>
+          <p>Um consultor tira suas dúvidas e ajuda a decidir.</p>
+        </li>
+        <li>
+          <span class="step-n">03</span><span class="step-ico"><svg aria-hidden="true"><use href="#doc"/></svg></span>
+          <h3>Combine as condições</h3>
+          <p>Definimos valor, financiamento, troca ou consórcio e registramos tudo.</p>
+        </li>
+        <li>
+          <span class="step-n">04</span><span class="step-ico"><svg aria-hidden="true"><use href="#key"/></svg></span>
+          <h3>Retire o seu carro</h3>
+          <p>Assine a documentação e saia dirigindo.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- VANTAGENS -->
+  <section class="section" id="vantagens">
+    <div class="wrap">
+      <header class="section-head">
+        <h2>Por que comprar na Landora</h2>
+      </header>
+      <div class="adv-grid">
+        <article class="adv">
+          <svg class="adv-ico" aria-hidden="true"><use href="#play"/></svg>
+          <h3>Vídeo de cada carro</h3>
+          <p>Veja por fora, por dentro e em movimento antes de ir à loja.</p>
+          <a class="more" href="#carros">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        </article>
+        <article class="adv">
+          <svg class="adv-ico" aria-hidden="true"><use href="#person"/></svg>
+          <h3>Consultor exclusivo</h3>
+          <p>Uma pessoa acompanha você da primeira conversa até a entrega.</p>
+          <a class="more" href="#contato">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        </article>
+        <article class="adv">
+          <svg class="adv-ico" aria-hidden="true"><use href="#shield"/></svg>
+          <h3>Vistoria antes da compra</h3>
+          <p>Todo carro passa por checagem mecânica e jurídica completa.</p>
+          <a class="more" href="#faq">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        </article>
+        <article class="adv">
+          <svg class="adv-ico" aria-hidden="true"><use href="#percent"/></svg>
+          <h3>Condições flexíveis</h3>
+          <p>Financiamento, consórcio e troca com as melhores taxas do mercado.</p>
+          <a class="more" href="#contato">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTOQUE -->
+  <section class="section" id="carros">
+    <div class="wrap">
+      <header class="section-head split">
+        <div>
+          <p class="eyebrow">Em estoque</p>
+          <h2>Seleção de carros</h2>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#carros">Ver todos os carros <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      </header>
+
+      <div class="cars">
+        <article class="car-card">
+          <div class="car-photo tone-dark">
+            <span class="year">2024</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+          </div>
+          <div class="car-info">
+            <h3>Cupê esportivo GT</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.0 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>450 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 649.900</p>
+              <a class="round" href="#contato" aria-label="Ver detalhes do Cupê esportivo GT"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card">
+          <div class="car-photo tone-lime">
+            <span class="year">2023</span>
+            <span class="tag-new">Novo</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+          </div>
+          <div class="car-info">
+            <h3>SUV premium LX</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.5 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>420 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 539.900</p>
+              <a class="round" href="#contato" aria-label="Ver detalhes do SUV premium LX"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card">
+          <div class="car-photo tone-dark">
+            <span class="year">2024</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+          </div>
+          <div class="car-info">
+            <h3>Sedã executivo</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>2.0 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>245 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 389.900</p>
+              <a class="round" href="#contato" aria-label="Ver detalhes do Sedã executivo"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap faq-grid">
+      <header class="section-head">
+        <p class="eyebrow">Dúvidas</p>
+        <h2>Perguntas frequentes</h2>
+        <svg class="speedo" viewBox="0 0 220 120" aria-hidden="true">
+          <path d="M10 112a100 100 0 0 1 200 0" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/>
+          <path d="M10 112a100 100 0 0 1 150-87" fill="none" stroke="var(--lime)" stroke-width="5" stroke-linecap="round"/>
+          <path d="m110 112 44-48" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </header>
+
+      <div class="faq-list">
+        <details>
+          <summary>Quais documentos preciso para comprar um carro?<svg aria-hidden="true"><use href="#plus"/></svg></summary>
+          <p>RG ou CNH, CPF e comprovante de residência. Para financiar, pedimos também comprovante de renda.</p>
+        </details>
+        <details>
+          <summary>Posso financiar ou fazer consórcio?<svg aria-hidden="true"><use href="#plus"/></svg></summary>
+          <p>Sim. Simulamos as duas opções com você e mostramos a parcela antes de qualquer assinatura.</p>
+        </details>
+        <details>
+          <summary>Vocês aceitam meu carro na troca?<svg aria-hidden="true"><use href="#plus"/></svg></summary>
+          <p>Aceitamos. Avaliamos seu carro no mesmo dia e abatemos o valor da compra.</p>
+        </details>
+        <details>
+          <summary>Como é a vistoria antes da compra?<svg aria-hidden="true"><use href="#plus"/></svg></summary>
+          <p>Checamos motor, suspensão, elétrica, histórico de manutenção e situação jurídica do veículo.</p>
+        </details>
+        <details>
+          <summary>Os carros têm garantia?<svg aria-hidden="true"><use href="#plus"/></svg></summary>
+          <p>Sim. O prazo e a cobertura aparecem na proposta de cada carro.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section" id="contato">
+    <div class="wrap">
+      <div class="cta">
+        <div class="cta-art" aria-hidden="true">
+          <svg class="car"><use href="#car"/></svg>
+        </div>
+        <div class="cta-title">
+          <p class="eyebrow">Seu carro está esperando</p>
+          <h2>Pronto para<br><em>acelerar?</em></h2>
+        </div>
+        <div class="cta-side">
+          <p>Envie seus dados e um consultor escolhe o melhor carro para você ainda hoje.</p>
+          <a class="btn btn-primary" href="mailto:contato@landora.com.br">Quero uma proposta <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#topo" aria-label="Landora Motors, início">
+        <svg class="brand-mark" aria-hidden="true"><use href="#logo"/></svg>
+        <span class="brand-text"><b>LANDORA</b><i>Motors</i></span>
+      </a>
+      <p>Carros premium para quem escolhe o melhor.</p>
+    </div>
+    <nav aria-label="Navegação">
+      <h4>Navegação</h4>
+      <a href="#carros">Automóveis</a>
+      <a href="#vantagens">Financiamento</a>
+      <a href="#como-funciona">Troca</a>
+      <a href="#faq">Perguntas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <nav aria-label="Serviços">
+      <h4>Serviços</h4>
+      <a href="#contato">Compra de seminovos</a>
+      <a href="#contato">Seguro</a>
+      <a href="#contato">Financiamento</a>
+      <a href="#contato">Consórcio</a>
+      <a href="#contato">Acessórios</a>
+    </nav>
+    <div class="foot-contact">
+      <h4>Contato</h4>
+      <a href="tel:+551100000000"><svg aria-hidden="true"><use href="#phone"/></svg>(11) 0000-0000</a>
+      <a href="mailto:contato@landora.com.br"><svg aria-hidden="true"><use href="#mail"/></svg>contato@landora.com.br</a>
+      <p><svg aria-hidden="true"><use href="#pin"/></svg>Rua Exemplo, 123, Vinhedo, SP</p>
+      <p class="hours">Todos os dias, das 9h às 19h</p>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>© 2026 Landora Motors. Todos os direitos reservados.</p>
+    <a href="#topo">Política de privacidade</a>
+    <a href="#topo">Termos de uso</a>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
