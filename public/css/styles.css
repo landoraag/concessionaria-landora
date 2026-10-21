@@ -969,3 +969,18 @@ html.lock { overflow: hidden; }
   .site-header.scrolled .brand-logo { height: 28px; transition: height .5s var(--ease); }
   .site-header.scrolled .brand-sub { font-size: 6.5px; }
 }
+
+
+/* ---------- Sobre nós ---------- */
+.about-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.about-copy h2 { font-size: clamp(28px, 3.2vw, 42px); line-height: 1.1; margin-bottom: 18px; }
+.about-copy > p { color: #b4bec8; margin-bottom: 14px; max-width: 54ch; }
+.about-values { list-style: none; padding: 0; margin: 24px 0 28px; display: grid; gap: 12px; }
+.about-values li { display: flex; gap: 14px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.about-values svg { width: 22px; height: 22px; flex: none; color: var(--brand-light); }
+.about-values b { display: block; font-size: 15px; }
+.about-values span { color: var(--muted); font-size: 14px; }
+.about-photo { margin: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 4.4; position: relative; }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 60%; filter: brightness(.85); }
+.about-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(5, 11, 16, .6)); }
+@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 28px; } .about-photo { aspect-ratio: 16 / 11; } }

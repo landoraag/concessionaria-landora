@@ -78,7 +78,7 @@
       if (a) setActive(a);
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  ['como-funciona', 'vantagens', 'carros', 'faq', 'contato'].forEach(function (id) {
+  ['como-funciona', 'vantagens', 'carros', 'sobre', 'contato'].forEach(function (id) {
     var el = document.getElementById(id);
     if (el) spy.observe(el);
   });
