@@ -382,3 +382,256 @@ em { font-style: normal; color: var(--lime); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+
+/* ============================================================
+   CAMADA DE MOVIMENTO E COMPONENTES
+   Referências: Cult UI (cartão que revela detalhes, botão com halo,
+   vidro canelado, barra estilo Dynamic Island) e Refero Styles
+   (filtros em pílulas e busca).
+   ============================================================ */
+
+@property --halo { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+button.btn, button.round, button.pill { font-family: inherit; }
+button.round { background: transparent; cursor: pointer; padding: 0; }
+
+/* ---------- Barra de progresso da rolagem ---------- */
+.progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 80;
+  background: var(--lime); transform-origin: left; transform: scaleX(var(--p, 0));
+  box-shadow: 0 0 12px rgba(196, 229, 53, .6);
+  pointer-events: none;
+}
+
+/* ---------- Cabeçalho que vira uma "ilha" ao rolar ---------- */
+.site-header { height: 72px; transition: background .35s var(--ease), border-color .35s var(--ease); }
+.header-row {
+  transition: width .5s var(--ease), margin-top .5s var(--ease), height .5s var(--ease),
+              padding .5s var(--ease), border-color .5s, background .5s, box-shadow .5s;
+  border: 1px solid transparent; border-radius: 999px;
+}
+@media (min-width: 861px) {
+  .site-header.scrolled { background: transparent; border-bottom-color: transparent; backdrop-filter: none; }
+  .site-header.scrolled .header-row {
+    width: min(100% - 32px, 980px); margin-top: 8px; height: 58px; padding: 0 12px 0 20px; gap: 18px;
+    background: rgba(13, 19, 26, .82); backdrop-filter: blur(16px);
+    border-color: #26323f; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .8);
+  }
+  .site-header.scrolled .header-phone { display: none; }
+  .site-header.scrolled .main-nav { margin-left: auto; }
+}
+
+/* Pílula que desliza entre os links */
+.main-nav { position: relative; gap: 2px; }
+.main-nav a { position: relative; z-index: 1; padding: 8px 14px; border-radius: 999px; }
+.main-nav a.is-active { color: var(--text); }
+.nav-pill {
+  position: absolute; top: 0; left: 0; height: 100%; width: 0; border-radius: 999px;
+  background: rgba(196, 229, 53, .14); border: 1px solid rgba(196, 229, 53, .3);
+  opacity: 0; pointer-events: none;
+  transition: transform .4s var(--ease), width .4s var(--ease), opacity .25s;
+}
+
+/* ---------- Botão com halo (Cult UI) ---------- */
+.btn-primary { position: relative; isolation: isolate; overflow: visible; }
+.btn-primary::before {
+  content: ""; position: absolute; inset: -2px; border-radius: inherit; z-index: -1;
+  background: conic-gradient(from var(--halo), transparent 0 62%, rgba(255, 255, 255, .9) 82%, var(--lime) 100%);
+  opacity: 0; transition: opacity .3s; animation: halo 2.6s linear infinite;
+}
+.btn-primary:hover::before, .btn-primary:focus-visible::before, .btn-halo::before { opacity: 1; }
+.btn-primary::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .55) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat;
+  transition: background-position .8s var(--ease);
+}
+.btn-primary:hover::after { background-position: 150% 0; }
+.btn svg { transition: transform .25s var(--ease); }
+.btn:hover svg { transform: translateX(4px); }
+.btn:active { transform: scale(.97); }
+@keyframes halo { to { --halo: 360deg; } }
+
+/* ---------- Abertura do hero (o momento orquestrado da página) ---------- */
+.ln { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+.ln > span { display: block; animation: rise .95s var(--ease) both; animation-delay: calc(var(--i) * 90ms + 120ms); }
+@keyframes rise { from { transform: translateY(110%); } to { transform: none; } }
+
+.hero-copy .eyebrow, .hero-copy .lead, .hero-actions { animation: fade-in .8s var(--ease) both; }
+.hero-copy .eyebrow { animation-delay: .05s; }
+.hero-copy .lead { animation-delay: .55s; }
+.hero-actions { animation-delay: .7s; }
+@keyframes fade-in { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+@keyframes arrive { from { translate: 90px 0; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+.car-front { transition: transform .6s var(--ease); transform: translate3d(calc(var(--px, 0) * 22px), calc(var(--py, 0) * 10px), 0); animation-duration: 1.3s; animation-delay: .3s; }
+.car-back { transition: transform .8s var(--ease); transform: translate3d(calc(var(--px, 0) * -14px), calc(var(--py, 0) * -6px), 0); animation: arrive-back 1.4s var(--ease) .15s both; }
+@keyframes arrive-back { from { translate: -70px 0; opacity: 0; } to { translate: 0 0; opacity: .9; } }
+.floor-glow { animation: glow-in 1.4s var(--ease) .6s both; }
+@keyframes glow-in { from { opacity: 0; scale: .6 1; } to { opacity: 1; scale: 1 1; } }
+
+.orbit, .chip { animation: pop .7s var(--ease) both; }
+.orbit { animation-delay: 1s; }
+.chip-a { animation-delay: 1.15s; }
+.chip-b { animation-delay: 1.3s; }
+@keyframes pop { from { opacity: 0; scale: .7; } to { opacity: 1; scale: 1; } }
+.orbit::before {
+  content: ""; position: absolute; inset: -9px; border-radius: 50%;
+  border: 1.5px dashed rgba(196, 229, 53, .55); animation: spin 28s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Entrada ao rolar ---------- */
+.js [data-reveal] { opacity: 0; transform: translateY(26px); }
+.js [data-reveal].in {
+  opacity: 1; transform: none;
+  transition: opacity .7s var(--ease) calc(var(--d, 0) * 80ms), transform .8s var(--ease) calc(var(--d, 0) * 80ms);
+}
+
+/* ---------- Passos: a linha se desenha e acende cada etapa ---------- */
+.steps li::after {
+  border-top: 0; height: 2px; top: 23px; transform-origin: left; transform: scaleX(0);
+  background: repeating-linear-gradient(90deg, #56667a 0 3px, transparent 3px 8px);
+  transition: transform .9s var(--ease) calc(var(--d, 0) * 220ms + 300ms);
+}
+.steps.in li::after { transform: scaleX(1); }
+.step-ico { transition: border-color .4s, color .4s, background .4s; }
+.steps.in .step-ico { animation: light-up .9s var(--ease) calc(var(--d, 0) * 220ms + 150ms) both; }
+@keyframes light-up {
+  0% { border-color: #2b3744; } 40% { border-color: var(--lime); color: var(--lime); background: rgba(196, 229, 53, .12); }
+  100% { border-color: #2b3744; }
+}
+
+/* ---------- Holofote que segue o mouse (cards) ---------- */
+.spot { position: relative; }
+.spot::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3;
+  background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgba(196, 229, 53, .12), transparent 62%);
+  opacity: 0; transition: opacity .35s;
+}
+.spot:hover::before { opacity: 1; }
+.adv { overflow: hidden; }
+.adv-ico { transition: transform .4s var(--ease); }
+.adv:hover .adv-ico { transform: translateY(-4px) rotate(-6deg) scale(1.08); }
+
+/* ---------- Filtros e busca (Refero) ---------- */
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill {
+  padding: 9px 18px; border-radius: 999px; border: 1px solid #2b3744; background: transparent; color: #cdd5dc;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: background .25s, color .25s, border-color .25s, transform .2s var(--ease);
+}
+.pill:hover { border-color: var(--lime); color: var(--text); }
+.pill:active { transform: scale(.95); }
+.pill.is-on { background: var(--lime); border-color: var(--lime); color: #0a0f05; }
+
+.search {
+  display: flex; align-items: center; gap: 10px; min-width: 260px; padding: 0 16px; height: 44px;
+  border: 1px solid #2b3744; border-radius: 999px; background: var(--surface);
+  transition: border-color .25s, box-shadow .25s, min-width .35s var(--ease);
+}
+.search:focus-within { border-color: var(--lime); box-shadow: 0 0 0 4px rgba(196, 229, 53, .12); min-width: 320px; }
+.search svg { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.search input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: var(--text); font: inherit; font-size: 14px; }
+.search input::placeholder { color: #6d7a87; }
+.result-count { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+.result-count span { color: var(--text); font-weight: 700; }
+.empty { text-align: center; padding: 56px 0; color: var(--muted); display: grid; gap: 16px; justify-items: center; }
+
+::view-transition-group(*) { animation-duration: .5s; animation-timing-function: var(--ease); }
+
+/* ---------- Cartão que revela detalhes (Cult UI "Shift card") ---------- */
+.car-photo { overflow: hidden; }
+.car-art { transition: transform .6s var(--ease); }
+.car-reveal {
+  position: absolute; inset: auto 0 0 0; z-index: 4; padding: 54px 18px 16px;
+  display: grid; gap: 12px;
+  background: linear-gradient(180deg, transparent, rgba(7, 11, 16, .92) 45%);
+  transform: translateY(101%); transition: transform .5s var(--ease);
+}
+.car-reveal dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+.car-reveal dt { font-size: 11px; color: var(--muted); }
+.car-reveal dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; }
+.car-reveal .btn { justify-self: start; }
+@media (hover: hover) {
+  .car-card:hover .car-reveal, .car-card:focus-within .car-reveal { transform: none; }
+  .car-card:hover .car-art, .car-card:focus-within .car-art { transform: translateY(-46px) scale(.8); }
+}
+.car-card.pop { animation: pop-card .55s var(--ease) both; }
+@keyframes pop-card { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: none; } }
+.round { cursor: pointer; }
+.round svg { transition: transform .25s var(--ease); }
+.round:hover svg { transform: translateX(3px) rotate(-45deg); }
+
+/* ---------- FAQ ---------- */
+.faq-list summary { transition: color .2s, padding .3s var(--ease); }
+.faq-list details:hover summary { color: var(--lime); }
+.faq-list details p { overflow: hidden; }
+.needle { transform-origin: 110px 112px; transform: rotate(0deg); }
+.speedo.in .needle { animation: needle 2.2s var(--ease) .2s both; }
+@keyframes needle { 0% { transform: rotate(0deg); } 55% { transform: rotate(122deg); } 75% { transform: rotate(104deg); } 100% { transform: rotate(115deg); } }
+
+/* ---------- CTA com vidro canelado (Cult UI "Fluted glass") ---------- */
+.cta::after {
+  content: ""; position: absolute; inset: 0 40% 0 0; pointer-events: none; z-index: 1;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .07) 0 2px, rgba(255, 255, 255, 0) 2px 12px, rgba(0, 0, 0, .18) 12px 14px);
+  backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent);
+  mask-image: linear-gradient(90deg, #000 30%, transparent);
+}
+.cta-art, .cta-title, .cta-side { position: relative; z-index: 2; }
+.cta-art .car { transition: transform .8s var(--ease); }
+.cta:hover .cta-art .car { transform: translateX(14px); }
+
+/* ---------- Formulário em diálogo ---------- */
+.dlg {
+  width: min(100% - 32px, 460px); padding: 34px 30px 30px; border: 1px solid #2b3744; border-radius: 20px;
+  background: linear-gradient(180deg, #111922, #0b1118); color: var(--text);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, .9), 0 0 0 1px rgba(196, 229, 53, .06);
+}
+.dlg[open] { animation: dialog-in .45s var(--ease) both; }
+.dlg.closing { animation: dialog-out .25s ease-in both; }
+.dlg::backdrop { background: rgba(3, 6, 9, .7); backdrop-filter: blur(6px); animation: fade-bg .35s both; }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes dialog-out { to { opacity: 0; transform: translateY(12px) scale(.98); } }
+@keyframes fade-bg { from { opacity: 0; } to { opacity: 1; } }
+.dlg h2 { font-size: 28px; margin-bottom: 8px; }
+.lead-sub { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
+.dlg form { display: grid; gap: 14px; }
+.dlg label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; color: #cdd5dc; }
+.dlg input, .dlg select {
+  height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #2b3744; background: #0a1017; color: var(--text);
+  font: inherit; font-size: 15px; transition: border-color .2s, box-shadow .2s;
+}
+.dlg input:focus, .dlg select:focus { outline: 0; border-color: var(--lime); box-shadow: 0 0 0 4px rgba(196, 229, 53, .14); }
+.dlg input:user-invalid { border-color: #ff6a5a; }
+.dlg .btn { justify-content: center; margin-top: 6px; }
+.form-error { color: #ff8a7d; font-size: 13px; }
+.lead-close {
+  position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #2b3744;
+  background: transparent; color: var(--text); cursor: pointer; display: grid; place-items: center; transition: transform .3s var(--ease), border-color .2s;
+}
+.lead-close svg { width: 18px; height: 18px; transform: rotate(45deg); }
+.lead-close:hover { border-color: var(--lime); transform: rotate(90deg); }
+.lead-ok { display: grid; gap: 12px; justify-items: start; padding: 10px 0; animation: fade-in .5s var(--ease) both; }
+.lead-ok[hidden], .empty[hidden], .form-error[hidden], .dlg form[hidden] { display: none; }
+.lead-ok > svg { width: 48px; height: 48px; color: var(--lime); }
+.lead-ok p { color: var(--muted); }
+
+/* ---------- Ajustes de tela pequena ---------- */
+@media (max-width: 860px) {
+  .nav-pill { display: none; }
+  .main-nav a { border-radius: 0; }
+  .search { min-width: 0; width: 100%; }
+  .search:focus-within { min-width: 0; }
+}
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ln > span { transform: none; }
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .steps li::after { transform: scaleX(1); }
+  .progress { display: none; }
+  .btn-primary::before { animation: none; }
+  .car-reveal { transition: none; }
+}

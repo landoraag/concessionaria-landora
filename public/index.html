@@ -10,8 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 
 <!-- Símbolos SVG reutilizáveis -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -59,6 +61,7 @@
     </a>
 
     <nav class="main-nav" id="menu" aria-label="Principal">
+      <span class="nav-pill" aria-hidden="true"></span>
       <a href="#carros">Automóveis</a>
       <a href="#vantagens">Financiamento</a>
       <a href="#como-funciona">Troca</a>
@@ -69,7 +72,7 @@
     <a class="header-phone" href="tel:+551100000000">
       <svg aria-hidden="true"><use href="#phone"/></svg>(11) 0000-0000
     </a>
-    <a class="btn btn-primary btn-sm header-cta" href="#contato">Quero uma proposta</a>
+    <button class="btn btn-primary btn-sm header-cta" type="button" data-open-lead>Quero uma proposta</button>
 
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
       <span></span><span></span><span></span>
@@ -84,11 +87,16 @@
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Seu próximo carro, sem enrolação</p>
-        <h1>Escolha<br><em>mais rápido.</em><br>Dirija<br><em>com prazer.</em></h1>
+        <h1 aria-label="Escolha mais rápido. Dirija com prazer.">
+          <span class="ln" aria-hidden="true"><span style="--i:0">Escolha</span></span>
+          <span class="ln" aria-hidden="true"><span style="--i:1"><em>mais rápido.</em></span></span>
+          <span class="ln" aria-hidden="true"><span style="--i:2">Dirija</span></span>
+          <span class="ln" aria-hidden="true"><span style="--i:3"><em>com prazer.</em></span></span>
+        </h1>
         <p class="lead">Carros premium para quem valoriza desempenho, tecnologia e estilo. Veja o estoque, fale com um consultor e feche o negócio com segurança.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#carros">Ver carros <svg aria-hidden="true"><use href="#arrow"/></svg></a>
-          <a class="btn btn-ghost" href="#contato">Quero uma proposta</a>
+          <a class="btn btn-primary btn-halo" href="#carros">Ver carros <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <button class="btn btn-ghost" type="button" data-open-lead>Quero uma proposta</button>
         </div>
       </div>
 
@@ -96,8 +104,8 @@
         <svg class="car car-back"><use href="#car"/></svg>
         <svg class="car car-front"><use href="#car"/></svg>
         <div class="floor-glow"></div>
-        <div class="orbit"><span>escolha em<b>15 min</b></span></div>
-        <div class="chip chip-a"><svg><use href="#key"/></svg><p><b>+200</b> carros em estoque</p></div>
+        <div class="orbit"><span>escolha em<b><span data-count="15">15</span> min</b></span></div>
+        <div class="chip chip-a"><svg><use href="#key"/></svg><p><b>+<span data-count="200">200</span></b> carros em estoque</p></div>
         <div class="chip chip-b"><svg><use href="#shield"/></svg><p>Negócio com garantia</p></div>
       </div>
     </div>
@@ -142,25 +150,25 @@
         <h2>Por que comprar na Landora</h2>
       </header>
       <div class="adv-grid">
-        <article class="adv">
+        <article class="adv spot">
           <svg class="adv-ico" aria-hidden="true"><use href="#play"/></svg>
           <h3>Vídeo de cada carro</h3>
           <p>Veja por fora, por dentro e em movimento antes de ir à loja.</p>
           <a class="more" href="#carros">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
         </article>
-        <article class="adv">
+        <article class="adv spot">
           <svg class="adv-ico" aria-hidden="true"><use href="#person"/></svg>
           <h3>Consultor exclusivo</h3>
           <p>Uma pessoa acompanha você da primeira conversa até a entrega.</p>
           <a class="more" href="#contato">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
         </article>
-        <article class="adv">
+        <article class="adv spot">
           <svg class="adv-ico" aria-hidden="true"><use href="#shield"/></svg>
           <h3>Vistoria antes da compra</h3>
           <p>Todo carro passa por checagem mecânica e jurídica completa.</p>
           <a class="more" href="#faq">Saiba mais <svg aria-hidden="true"><use href="#arrow"/></svg></a>
         </article>
-        <article class="adv">
+        <article class="adv spot">
           <svg class="adv-ico" aria-hidden="true"><use href="#percent"/></svg>
           <h3>Condições flexíveis</h3>
           <p>Financiamento, consórcio e troca com as melhores taxas do mercado.</p>
@@ -173,19 +181,38 @@
   <!-- ESTOQUE -->
   <section class="section" id="carros">
     <div class="wrap">
-      <header class="section-head split">
-        <div>
-          <p class="eyebrow">Em estoque</p>
-          <h2>Seleção de carros</h2>
-        </div>
-        <a class="btn btn-ghost btn-sm" href="#carros">Ver todos os carros <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      <header class="section-head">
+        <p class="eyebrow">Em estoque</p>
+        <h2>Seleção de carros</h2>
       </header>
 
-      <div class="cars">
-        <article class="car-card">
+      <div class="toolbar">
+        <div class="pills" role="group" aria-label="Filtrar por tipo">
+          <button class="pill is-on" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+          <button class="pill" type="button" data-filter="esportivo" aria-pressed="false">Esportivos</button>
+          <button class="pill" type="button" data-filter="suv" aria-pressed="false">SUVs</button>
+          <button class="pill" type="button" data-filter="sedan" aria-pressed="false">Sedãs</button>
+        </div>
+        <label class="search">
+          <svg aria-hidden="true"><use href="#search"/></svg>
+          <input id="busca" type="search" placeholder="Buscar por modelo" autocomplete="off">
+        </label>
+      </div>
+      <p class="result-count" aria-live="polite"><span id="contagem">6</span> carros em estoque</p>
+
+      <div class="cars" id="lista-carros">
+        <article class="car-card spot" data-cat="esportivo" data-name="cupê esportivo gt">
           <div class="car-photo tone-dark">
             <span class="year">2024</span>
             <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>3,9 s</dd></div>
+                <div><dt>Cor</dt><dd>Preto grafite</dd></div>
+                <div><dt>Rodou</dt><dd>12.400 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Cupê esportivo GT">Falar com consultor</button>
+            </div>
           </div>
           <div class="car-info">
             <h3>Cupê esportivo GT</h3>
@@ -197,16 +224,24 @@
             </ul>
             <div class="car-foot">
               <p class="price">R$ 649.900</p>
-              <a class="round" href="#contato" aria-label="Ver detalhes do Cupê esportivo GT"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+              <button class="round" type="button" data-open-lead data-car="Cupê esportivo GT" aria-label="Pedir proposta do Cupê esportivo GT"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
             </div>
           </div>
         </article>
 
-        <article class="car-card">
+        <article class="car-card spot" data-cat="suv" data-name="suv premium lx">
           <div class="car-photo tone-lime">
             <span class="year">2023</span>
             <span class="tag-new">Novo</span>
             <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>4,8 s</dd></div>
+                <div><dt>Cor</dt><dd>Verde-limão</dd></div>
+                <div><dt>Rodou</dt><dd>8.900 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="SUV premium LX">Falar com consultor</button>
+            </div>
           </div>
           <div class="car-info">
             <h3>SUV premium LX</h3>
@@ -218,15 +253,23 @@
             </ul>
             <div class="car-foot">
               <p class="price">R$ 539.900</p>
-              <a class="round" href="#contato" aria-label="Ver detalhes do SUV premium LX"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+              <button class="round" type="button" data-open-lead data-car="SUV premium LX" aria-label="Pedir proposta do SUV premium LX"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
             </div>
           </div>
         </article>
 
-        <article class="car-card">
+        <article class="car-card spot" data-cat="sedan" data-name="sedã executivo">
           <div class="car-photo tone-dark">
             <span class="year">2024</span>
             <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>6,4 s</dd></div>
+                <div><dt>Cor</dt><dd>Cinza chumbo</dd></div>
+                <div><dt>Rodou</dt><dd>5.200 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Sedã executivo">Falar com consultor</button>
+            </div>
           </div>
           <div class="car-info">
             <h3>Sedã executivo</h3>
@@ -238,10 +281,100 @@
             </ul>
             <div class="car-foot">
               <p class="price">R$ 389.900</p>
-              <a class="round" href="#contato" aria-label="Ver detalhes do Sedã executivo"><svg aria-hidden="true"><use href="#arrow"/></svg></a>
+              <button class="round" type="button" data-open-lead data-car="Sedã executivo" aria-label="Pedir proposta do Sedã executivo"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
             </div>
           </div>
         </article>
+
+        <article class="car-card spot" data-cat="esportivo" data-name="cupê roadster rs">
+          <div class="car-photo tone-lime">
+            <span class="year">2022</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>3,4 s</dd></div>
+                <div><dt>Cor</dt><dd>Verde-limão</dd></div>
+                <div><dt>Rodou</dt><dd>18.700 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Cupê roadster RS">Falar com consultor</button>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>Cupê roadster RS</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>4.0 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>520 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 789.900</p>
+              <button class="round" type="button" data-open-lead data-car="Cupê roadster RS" aria-label="Pedir proposta do Cupê roadster RS"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card spot" data-cat="suv" data-name="suv família xl">
+          <div class="car-photo tone-dark">
+            <span class="year">2024</span>
+            <span class="tag-new">Novo</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>6,9 s</dd></div>
+                <div><dt>Cor</dt><dd>Preto grafite</dd></div>
+                <div><dt>Rodou</dt><dd>3.100 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="SUV família XL">Falar com consultor</button>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>SUV família XL</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>2.5 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>310 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Integral</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 459.900</p>
+              <button class="round" type="button" data-open-lead data-car="SUV família XL" aria-label="Pedir proposta do SUV família XL"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card spot" data-cat="sedan" data-name="sedã sport s">
+          <div class="car-photo tone-dark">
+            <span class="year">2023</span>
+            <svg class="car-art" aria-hidden="true"><use href="#car"/></svg>
+            <div class="car-reveal">
+              <dl>
+                <div><dt>0 a 100 km/h</dt><dd>4,7 s</dd></div>
+                <div><dt>Cor</dt><dd>Cinza chumbo</dd></div>
+                <div><dt>Rodou</dt><dd>14.300 km</dd></div>
+              </dl>
+              <button class="btn btn-primary btn-sm" type="button" data-open-lead data-car="Sedã sport S">Falar com consultor</button>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>Sedã sport S</h3>
+            <ul class="specs">
+              <li><svg aria-hidden="true"><use href="#engine"/></svg>3.0 L</li>
+              <li><svg aria-hidden="true"><use href="#gauge"/></svg>380 cv</li>
+              <li><svg aria-hidden="true"><use href="#gear"/></svg>Automático</li>
+              <li><svg aria-hidden="true"><use href="#drive"/></svg>Traseira</li>
+            </ul>
+            <div class="car-foot">
+              <p class="price">R$ 479.900</p>
+              <button class="round" type="button" data-open-lead data-car="Sedã sport S" aria-label="Pedir proposta do Sedã sport S"><svg aria-hidden="true"><use href="#arrow"/></svg></button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty" id="vazio" hidden>
+        <p>Nenhum carro encontrado com esse filtro.</p>
+        <button class="btn btn-ghost btn-sm" type="button" data-reset>Limpar filtros</button>
       </div>
     </div>
   </section>
@@ -255,7 +388,7 @@
         <svg class="speedo" viewBox="0 0 220 120" aria-hidden="true">
           <path d="M10 112a100 100 0 0 1 200 0" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/>
           <path d="M10 112a100 100 0 0 1 150-87" fill="none" stroke="var(--lime)" stroke-width="5" stroke-linecap="round"/>
-          <path d="m110 112 44-48" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"/>
+          <path class="needle" d="M110 112H52" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="112" r="5" fill="var(--lime)"/>
         </svg>
       </header>
 
@@ -297,7 +430,7 @@
         </div>
         <div class="cta-side">
           <p>Envie seus dados e um consultor escolhe o melhor carro para você ainda hoje.</p>
-          <a class="btn btn-primary" href="mailto:contato@landora.com.br">Quero uma proposta <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+          <button class="btn btn-primary btn-halo" type="button" data-open-lead>Quero uma proposta <svg aria-hidden="true"><use href="#arrow"/></svg></button>
         </div>
       </div>
     </div>
@@ -343,6 +476,31 @@
     <a href="#topo">Termos de uso</a>
   </div>
 </footer>
+
+<dialog class="dlg" id="lead" aria-labelledby="lead-titulo">
+  <button class="lead-close" type="button" data-close-lead aria-label="Fechar"><svg aria-hidden="true"><use href="#plus"/></svg></button>
+  <form id="lead-form" novalidate>
+    <h2 id="lead-titulo">Receba uma proposta</h2>
+    <p class="lead-sub">Conte o que você procura e um consultor chama você no WhatsApp.</p>
+    <label>Nome
+      <input name="nome" type="text" autocomplete="name" required placeholder="Como podemos chamar você?">
+    </label>
+    <label>WhatsApp
+      <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(11) 90000-0000">
+    </label>
+    <label>Carro de interesse
+      <select name="carro" id="lead-carro"></select>
+    </label>
+    <p class="form-error" id="lead-erro" role="alert" hidden>Preencha seu nome e WhatsApp para continuar.</p>
+    <button class="btn btn-primary btn-halo" type="submit">Enviar pedido <svg aria-hidden="true"><use href="#arrow"/></svg></button>
+  </form>
+  <div class="lead-ok" id="lead-ok" hidden>
+    <svg aria-hidden="true"><use href="#shield"/></svg>
+    <h2>Pedido enviado</h2>
+    <p>Um consultor entra em contato em breve.</p>
+    <button class="btn btn-ghost btn-sm" type="button" data-close-lead>Fechar</button>
+  </div>
+</dialog>
 
 <script src="js/main.js"></script>
 </body>
