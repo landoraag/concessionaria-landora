@@ -957,3 +957,8 @@ html.lock { overflow: hidden; }
   .hero-car { right: 0; left: 0; margin: auto; width: 96%; bottom: 6%; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-car { animation: none; } }
+
+/* Mais escuro e translúcido para harmonizar */
+.hero-bg img { opacity: .36; filter: saturate(.5) brightness(.75) hue-rotate(185deg) saturate(1.4); }
+.hero-car { opacity: .94; filter: brightness(.9) drop-shadow(0 18px 22px rgba(0, 0, 0, .6)); }
+@keyframes car-slide { from { opacity: 0; transform: translateX(14%); filter: blur(8px) brightness(.9); } }
