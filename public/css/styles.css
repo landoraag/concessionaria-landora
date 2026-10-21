@@ -40,7 +40,7 @@ a { color: inherit; text-decoration: none; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, h4, p { margin: 0; }
 
-h1, h2, h3, h4, .brand-text b, .price, .step-n {
+h1, h2, h3, h4, .price, .step-n {
   font-family: "Archivo", "Manrope", sans-serif;
 }
 
@@ -85,10 +85,6 @@ h1, h2, h3, h4, .brand-text b, .price, .step-n {
 .header-row { display: flex; align-items: center; gap: 28px; height: 72px; }
 
 .brand { display: inline-flex; align-items: center; gap: 12px; }
-.brand-mark { width: 38px; height: 32px; color: var(--brand-light); }
-.brand-text { display: grid; line-height: 1; }
-.brand-text b { font-size: 21px; font-weight: 700; letter-spacing: .24em; font-stretch: 110%; }
-.brand-text i { font-style: normal; font-size: 11px; letter-spacing: .5em; color: var(--brand-light); margin-top: 5px; text-transform: uppercase; }
 
 .main-nav { display: flex; gap: 28px; margin-left: 24px; font-size: 14px; font-weight: 500; }
 .main-nav a { color: #cdd5dc; transition: color .2s; }
@@ -392,7 +388,6 @@ em { font-style: normal; color: var(--brand-light); }
    (filtros em pílulas e busca).
    ============================================================ */
 
-@property --halo { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
 button.btn, button.round, button.pill { font-family: inherit; }
 button.round { background: transparent; cursor: pointer; padding: 0; }
@@ -434,24 +429,10 @@ button.round { background: transparent; cursor: pointer; padding: 0; }
   transition: transform .4s var(--ease), width .4s var(--ease), opacity .25s;
 }
 
-/* ---------- Botão com halo (Cult UI) ---------- */
-.btn-primary { position: relative; isolation: isolate; overflow: visible; }
-.btn-primary::before {
-  content: ""; position: absolute; inset: -2px; border-radius: inherit; z-index: -1;
-  background: conic-gradient(from var(--halo), transparent 0 62%, rgba(255, 255, 255, .9) 82%, var(--brand) 100%);
-  opacity: 0; transition: opacity .3s; animation: halo 2.6s linear infinite;
-}
-.btn-primary:hover::before, .btn-primary:focus-visible::before, .btn-halo::before { opacity: 1; }
-.btn-primary::after {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none;
-  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .55) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat;
-  transition: background-position .8s var(--ease);
-}
-.btn-primary:hover::after { background-position: 150% 0; }
+/* ---------- Botões ---------- */
 .btn svg { transition: transform .25s var(--ease); }
 .btn:hover svg { transform: translateX(4px); }
 .btn:active { transform: scale(.97); }
-@keyframes halo { to { --halo: 360deg; } }
 
 /* ---------- Abertura do hero (o momento orquestrado da página) ---------- */
 .ln { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
@@ -637,7 +618,19 @@ button.round { background: transparent; cursor: pointer; padding: 0; }
   .car-reveal { transition: none; }
 }
 
-/* ---------- Identidade da marca Landora ---------- */
-.brand-mark { width: 30px; height: 34px; color: inherit; }
-.brand-text b { font-family: "Michroma", "Archivo", sans-serif; font-weight: 400; font-size: 18px; letter-spacing: .16em; font-stretch: normal; }
-.brand-text i { color: var(--brand-light); letter-spacing: .6em; font-size: 10px; margin-top: 6px; }
+/* ---------- Logo da Landora ---------- */
+.brand { position: relative; display: inline-block; line-height: 0; flex: none; }
+.brand-logo { display: block; height: 44px; width: auto; }
+.brand-sub {
+  position: absolute; left: 21.7%; width: 77%; top: 76%;
+  display: flex; justify-content: space-between;
+  font-family: "Manrope", sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #fff;
+}
+.brand-sub i { font-style: normal; }
+@media (max-width: 860px) { .brand-logo { height: 38px; } .brand-sub { font-size: 9px; } }
+
+/* Menu mobile: mantém a lista suspensa (a regra do menu desktop vinha depois e a anulava) */
+@media (max-width: 860px) {
+  .main-nav { position: absolute; }
+  .menu-toggle { flex: none; }
+}
