@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "concessionaria-landora": "concessionaria-landora",
+    "default": "concessionaria-landora"
+  },
+  "targets": {},
+  "etags": {}
+}
